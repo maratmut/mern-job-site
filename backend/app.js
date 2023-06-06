@@ -10,6 +10,8 @@ dotenv.config();
 
 const app = express();
 
+import authRoutes from './routes/authRoutes.js'
+
 //database connection
 mongoose
   .connect(process.env.DATABASE, {
@@ -30,6 +32,10 @@ app.use(
 );
 app.use(cookieParser());
 app.use(cors());
+
+//ROUTES MIDDLEWARE
+app.use('/api', authRoutes)
+
 
 //error middleware
 app.use(errorHandler);
