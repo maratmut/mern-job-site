@@ -12,6 +12,8 @@ const app = express();
 
 import authRoutes from './routes/authRoutes.js'
 import userRoutes from './routes/userRoutes.js'
+import jobTypeRoutes from './routes/jobsTypeRoutes.js'
+import jobRoute from './routes/jobsRoutes.js'
 
 
 //database connection
@@ -38,6 +40,8 @@ app.use(cors());
 //ROUTES MIDDLEWARE
 app.use('/api', authRoutes)
 app.use('/api', userRoutes)
+app.use('/api', jobTypeRoutes)
+app.use('/api', jobRoute)
 
 
 //error middleware
