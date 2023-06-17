@@ -32,10 +32,10 @@ export const allUsers = async (req, res, next) => {
 export const singleUser = async (req, res, next) => {
   try {
     const user = await User.findById(req.params.id);
-    if(!user) {
+    if (!user) {
       res.status(404).json({
         success: false,
-        message: 'Пользователь не найден'
+        message: 'Пользователь не найден',
       });
     }
     res.status(200).json({
@@ -70,6 +70,36 @@ export const deleteUser = async (req, res, next) => {
     res.status(200).json({
       success: true,
       message: 'пользователь удален',
+    });
+    next();
+  } catch (error) {
+    return next(error);
+  }
+};
+
+// jobs history
+export const createUserJobsHistory = async (req, res, next) => {
+  const { title, description, salary, location } = req.body;
+
+  try {
+    const currentUser = await User.findOne({ _id: req.user._id });
+    if (!currentUser) {
+      return next(new ErrorResponse('Необходимо авторизоваться', 401));
+    } else {
+      const addJobHistory = {
+        title,
+        description,
+        salary,
+        location,
+        user: req.user._id,
+      };
+      currentUser.jobsHistory.push(addJobHistory);
+      await currentUser.save();
+    }
+
+    res.status(200).json({
+      success: true,
+      currentUser,
     });
     next();
   } catch (error) {

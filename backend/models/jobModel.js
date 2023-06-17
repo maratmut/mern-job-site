@@ -1,5 +1,5 @@
 import mongoose from 'mongoose';
-import { ObjectId } from 'mongoose';
+import { Schema } from 'mongoose';
 
 const jobSchema = new mongoose.Schema(
   {
@@ -28,12 +28,12 @@ const jobSchema = new mongoose.Schema(
         default: true
     },
     jobType: {
-        type: ObjectId,
+        type: Schema.Types.ObjectId,
         ref: 'JobType',
         required: true
     },
     user: {
-        type: ObjectId,
+        type: Schema.Types.ObjectId,
         ref: 'User',
         required: true
     },
